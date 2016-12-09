@@ -32,6 +32,12 @@ html {
   color: white;
   background: rgba(0, 0, 0, 0.4);
   text-shadow: 0 0 5px black;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.key * {
+  pointer-events: none;
 }
 
 .key::before,

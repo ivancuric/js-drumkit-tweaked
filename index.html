@@ -59,12 +59,7 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-  function removeTransition(e) {
-    e.target.classList.remove('playing');
-  }
-
   function playSound(e) {
-    console.log(e);
     let key = null;
     let audio = null;
     if (e.type === 'keydown') {
@@ -85,13 +80,23 @@
   }
 
   function handleRelease(e) {
+    let key = null;
+    if (e.type === 'keyup') {
+      key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+      if (!key) return;
+    }
+    else if (e.type === 'touchend') {
+      key = e.target;
+    }
+
     pressed = pressed.filter(item => item !== e.keyCode);
+    key.classList.remove('playing');
   }
 
   const keys = Array.from(document.querySelectorAll('.key'));
   let pressed = [];
 
-  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  // keys.forEach(key => key.addEventListener('transitionend', removeTransition));
   window.addEventListener('keydown', playSound);
   window.addEventListener('touchstart', playSound);
   window.addEventListener('keyup', handleRelease);
